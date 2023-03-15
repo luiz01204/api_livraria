@@ -1,23 +1,28 @@
 import livros from "../models/Livro.js";
 
 class LivroController {
-    static listarLivros = (req, res) =>{
-        livros.find((err, livros) => {
-            res.status(200).json(livros)
-        })
-    }
-
-    static listarLivroPorId = (req, res) => {
-      const id = req.params.id;
   
-      livros.findById(id, (err, livros) => {
-        if(err) {
-          res.status(400).send({message: `${err.message} - Id do livro não localizado.`})
-        } else {
-          res.status(200).send(livros);
-        }
+  static listarLivros = (req, res) => {
+    livros.find()
+      .populate('autor')
+      .exec((err, livros) => {
+        res.status(200).json(livros)
+    })
+  }
+
+  static listarLivroPorId = (req, res) => {
+    const id = req.params.id;
+
+    livros.findById(id)
+      .populate('autor')
+      .exec((err, livros) => {
+      if(err) {
+        res.status(400).send({message: `${err.message} - Id do livro não localizado.`})
+      } else {
+        res.status(200).send(livros);
+      }
       })
-    }
+  }
 
     static cadastrarLivro = (req, res) => {
         let livro = new livros(req.body);
@@ -55,6 +60,17 @@ class LivroController {
         }
       })
     }
+
+    static listarLivroPorEditora = (req, res) => {
+      const editora = req.query.editora
+  
+      livros.find({'editora': editora}, {}, (err, livros) => {
+        res.status(200).send(livros);
+  
+      })
+    }
 }
 
 export default LivroController;
+
+// ex busca: http://localhost:3000/livros/busca?editora=Febracis

@@ -1,11 +1,16 @@
 # API Livraria
 
-Projeto pratico do curso de **API com Node JS** usanso MongoDB.
+Projeto pratico do curso de **API com Node JS** usanso Express e MongoDB
 
 ### Instalando dependecias: 
 
 Executar no terminal seguinte comando:
 `npm install`
+
+### Iniciando Servidor:
+
+Executar no terminal seguinte comando:
+`npm start`
 
 ### Rotas:
 
